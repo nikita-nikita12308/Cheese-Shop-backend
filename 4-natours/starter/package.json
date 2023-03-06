@@ -4,8 +4,9 @@
   "description": "udemy course, node.js, mongo , express",
   "main": "app.js",
   "scripts": {
-    "start:dev": "nodemon server.js",
-    "start:prod": "set NODE_ENV=production && nodemon server.js"
+    "start": "nodemon server.js",
+    "start:prod": "set NODE_ENV=production && nodemon server.js",
+    "debug": "ndb server.js"
   },
   "author": "",
   "license": "ISC",
