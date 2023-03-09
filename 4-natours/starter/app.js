@@ -35,4 +35,3 @@ app.all('*', (req, res, next) => {
 app.use(globbalErrorHandler)
 
 module.exports = app;
-
