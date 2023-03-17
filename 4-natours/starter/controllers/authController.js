@@ -1,3 +1,4 @@
+const { promisify } = require('util')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
@@ -71,7 +72,8 @@ exports.protect = catchAsync(async (req, res, next) => {
 		return next(new AppError('Your are not logged in! Please in to get access.', 401))
 	}
 	// 2) Validate token
-
+	const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET)
+	console.log(decoded)
 	// 3) Check if user still exists
 
 	// 4) Check if user change password after token was issued
