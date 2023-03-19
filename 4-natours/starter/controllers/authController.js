@@ -79,10 +79,16 @@ exports.protect = catchAsync(async (req, res, next) => {
 	// 3) Check if user still exists
 	const freshUser = await User.findById(decoded.id)
 	if(!freshUser) {
-		return next(new AppError('The user belonging to the token does no longer exist.',401))
+		return next(new AppError('The user belonging to the token does no longer exist.', 401))
 	}
 
 	// 4) Check if user change password after token was issued
-	freshUser.changedPasswordAfter(decoded.iat);
+	if(freshUser.changedPasswordAfter(decoded.iat)) {
+		return next(new AppError('User recently changed password! Please log in again', 401))
+	}
+
+
+	// GRANT ACCESS TO PROTECTED ROUTE
+	req.user = freshUser
 	next()
 })
