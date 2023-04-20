@@ -1,7 +1,8 @@
-const mongoose = require('mongoose')
+const crypto = require('crypto');
+const mongoose = require('mongoose');
 const slugify = require('slugify');
 const validator = require('validator');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 
 // name, email, photo, password, passwordConfirm
 const userSchema = new mongoose.Schema({
@@ -20,6 +21,11 @@ const userSchema = new mongoose.Schema({
 		validate: [validator.isEmail, 'Provide a valid email']
 	},
 	photo: String,
+	role: {
+		type: String,
+		enum: ['user', 'guide', 'lead-guide', 'admin'],
+		default: 'user'
+	},
 	password: {
 		type: String,
 		required: [true, 'User must have a password'],
@@ -72,6 +78,9 @@ userSchema.methods.changedPasswordAfter = function(JWTTimestamp){
 	return false;
 };
 
+userSchema.methods.createPasswordResetToken = function() {
+	const resetToken = crypto.randomBytes(32).toString('hex');
+};
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

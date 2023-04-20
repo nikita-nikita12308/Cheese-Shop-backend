@@ -1,4 +1,4 @@
-const { promisify } = require('util')
+const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
@@ -11,7 +11,7 @@ const signToken = id => {
 	return jwt.sign({ id }, process.env.JWT_SECRET, { 
 		expiresIn: process.env.JWT_EXPIRES_IN
 	});
-}
+};
 
 exports.signup = catchAsync(async (req, res, next) => {
 	const newUser = await User.create({
@@ -31,7 +31,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 			user:newUser
 		}
 	})
-})
+});
 
 exports.login = catchAsync(async (req, res, next) => {
 	const { email, password } = req.body;
@@ -73,8 +73,8 @@ exports.protect = catchAsync(async (req, res, next) => {
 	}
 
 	// 2) Validate token
-	const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET)
-	console.log(decoded)
+	const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+	console.log(decoded);
 
 	// 3) Check if user still exists
 	const freshUser = await User.findById(decoded.id)
@@ -86,9 +86,32 @@ exports.protect = catchAsync(async (req, res, next) => {
 	if(freshUser.changedPasswordAfter(decoded.iat)) {
 		return next(new AppError('User recently changed password! Please log in again', 401))
 	}
-
-
 	// GRANT ACCESS TO PROTECTED ROUTE
-	req.user = freshUser
+	req.user = freshUser;
 	next()
-})
+});
+
+exports.restrictTo = (...roles) => {
+	return(req, res, next) => {
+		//roles ['admin','lead-guide']. role='user'
+		if(!roles.includes(req.user.role)){
+			return next(new AppError('You do not have permission to perform this action', 403))
+		}
+		next();
+	}
+};
+
+exports.forgotPassword = catchAsync( async(req, res, next) => {
+	// 1) GET user based on the POSTed email
+	const user = await User.findOne({ email: req.body.emailAddress });
+	if(!user) {
+		return next(new AppError('There is no user with email address.', 404))
+	}
+	// 2) Generate random token
+
+	// 3) Send it to users email
+});
+
+exports.resetPassword = (req, res, next) => {
+
+};
