@@ -71,8 +71,9 @@ userSchema.pre('save', function(next) {
 	this.passwordChangedAt = Date.now() - 1000 ;
 	next();
 });
-userSchema.pre(/^find', function(next) {
-
+userSchema.pre(/^find/, function(next) {
+	// this points to the current query
+	this.find({ active: true});
 });
 
 userSchema.methods.correctPassword = async function(
