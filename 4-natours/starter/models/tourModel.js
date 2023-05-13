@@ -76,22 +76,46 @@ const tourSchema = new mongoose.Schema({
 	secretTour: {
 		type: Boolean,
 		default: false
-	}
+	},
+	startLocation: {
+		// GeoJSON
+		type: {
+			type: String,
+			default: 'Point',
+			enum: ['Point']
+		},
+		coordinates: [Number],
+		address: String,
+		description: String
+	},
+	locations: [
+		{
+			type: {
+				type: String,
+				default: 'Point',
+				enum: ['Point']
+			},
+			coordinates: [Number],
+			address: String,
+			description: String,
+			day: Number
+		}
+	]
 }, {
 	toJSON: { virtuals: true },
 	toObject: { virtuals: true }
-})
+});
 
 tourSchema.virtual('durationWeeks').get(function() {
 	return this.duration / 7;
-})
+});
 
 
 // DOCUMENT MIDDLEWARE: runs only before .save() and .create()
 tourSchema.pre('save', function(next) {
 	this.slug = slugify(this.name, { lower: true});
 	next();
-})
+});
 
 //tourSchema.pre('save', function(next) {
 //	console.log('Will save document...');
@@ -109,24 +133,24 @@ tourSchema.pre(/^find/, function(next) {
 
 	this.start = Date.now();
 	next();
-})
+});
 
 tourSchema.post(/^find/, function(docs, next) {
 	console.log(`Query took ${Date.now() - this.start} milliseconds`);
 	next();
-})
+});
 
 // AGREGATION MIDDLEWARE
 
 tourSchema.pre('aggregate', function(next) {
-	this.pipeline().unshift({ $match: { secretTour: { $ne: true } } })
+	this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
 
 	console.log(this.pipeline());
 	next();
-})
-const Tour = mongoose.model('Tour', tourSchema)
+});
+const Tour = mongoose.model('Tour', tourSchema);
 
-module.exports = Tour
+module.exports = Tour;
 
 
 
