@@ -1,15 +1,15 @@
 const fs = require('fs');
-const Tour = require('./../models/tourModel')
-const APIFeatures = require('./../utils/apiFeatures')
-const catchAsync = require('./../utils/catchAsync')
-const AppError = require('./../utils/appError')
+const Tour = require('./../models/tourModel');
+const APIFeatures = require('./../utils/apiFeatures');
+const catchAsync = require('./../utils/catchAsync');
+const AppError = require('./../utils/appError');
 
 exports.aliasTopTours = async (req, res, next) => {
 	req.query.limit = '5';
 	req.query.sort = '-ratingsAvarage, price';
 	req.query.fields = 'name,price,ratingsAverage,summary,difficulty';
 	next(); 
-}
+};
 
 exports.getAllTours = catchAsync(async (req, res, next) => {
 	// BUILD QUERY
@@ -48,7 +48,7 @@ exports.getTour = catchAsync(async (req, res, next) => {
 });
 
 exports.createTour = catchAsync(async (req, res, next) => {
-		const newTour = await Tour.create(req.body)
+		const newTour = await Tour.create(req.body);
 
 		res.status(201).json({
 				status: 'success',
