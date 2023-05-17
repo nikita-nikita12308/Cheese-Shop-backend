@@ -27,7 +27,35 @@ exports.updateOne = Model => catchAsync(async (req, res, next) => {
     res.status(200).json({
         status: "success",
         data: {
-            tour: doc
+            data: doc
+        }
+    })
+});
+
+exports.createOne = Model => catchAsync(async (req, res, next) => {
+    const newDoc = await Model.create(req.body);
+
+    res.status(201).json({
+        status: 'success',
+        data: {
+            data: newDoc
+        }
+    })
+});
+
+exports.getOne = (Model, popOptions) => catchAsync(async (req, res, next) => {
+    let query = await Model.findById(req.params.id);
+    if(popOptions) query = query.populate(popOptions);
+    const doc = await query;
+
+    if(!doc) {
+        return next(new AppError('No document found with that iD', 404))
+    }
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            data: doc
         }
     })
 });
