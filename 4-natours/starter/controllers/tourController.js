@@ -57,13 +57,13 @@ exports.createTour = catchAsync(async (req, res, next) => {
 					tour: newTour
 				}
 			})
-})
+});
 
 exports.updateTour = catchAsync(async (req, res, next) => {
 	const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
 		new: true,
 		runValidators: true
-	})
+	});
 
 	if(!tour) {
 		return next(new AppError('No tour found with that iD', 404))
@@ -114,7 +114,7 @@ exports.getTourStats =catchAsync(async (req, res, next) => {
 		//{
 		//	$match: { _id: { $ne: 'EASY'} }
 		//}
-	])
+	]);
 	res.status(200).json({
 		status: "success",
 		data: stats
@@ -122,7 +122,7 @@ exports.getTourStats =catchAsync(async (req, res, next) => {
 });
 
 exports.getMonthlyPlan = catchAsync(async (req,res) => {
-	const year = req.params.year * 1 // 2021
+	const year = req.params.year * 1; // 2021
 	const plan = await Tour.aggregate([
 			{
 				$unwind: '$startDates'
@@ -158,7 +158,7 @@ exports.getMonthlyPlan = catchAsync(async (req,res) => {
 			{
 				$limit: 12
 			}
-		])
+		]);
 	res.status(200).json({
 		status: "success",
 		data: { plan }
