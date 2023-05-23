@@ -177,17 +177,18 @@ tourSchema.post(/^find/, function(docs, next) {
 
 // AGREGATION MIDDLEWARE
 
-tourSchema.pre('aggregate', function(next) {
-	this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+//tourSchema.pre('aggregate', function(next) {
+// 	this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+//
+// 	console.log(this.pipeline());
+// 	next();
+// });
 
-	console.log(this.pipeline());
-	next();
-});
 const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;
 
-// це буде перерроблено на сири
+// це буде перерроблено на сири скоро
 
 
 
