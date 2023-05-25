@@ -1,8 +1,10 @@
 const express = require('express');
 const viewsController = require('../controllers/viewsController');
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
+// Set headers Policy for mapbox scripts
 const CSP = 'Content-Security-Policy';
 const POLICY =
     "default-src 'self' https://*.mapbox.com ;" +
@@ -21,7 +23,9 @@ router.use((req, res, next) => {
     next();
 });
 
+
 router.get('/', viewsController.getOverview);
-router.get('/tours/:tourName', viewsController.getTour);
+router.get('/tours/:tourName',authController.protect, viewsController.getTour);
+router.get('/login', viewsController.getLoginUserForm);
 
 module.exports = router;
