@@ -1,6 +1,10 @@
 extends base
 include _reviewCard
 
+block append head
+    script(src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js')
+    link(href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet')
+    //-script(src='/js/mapbox.js')
 
 mixin overviewBox(label, text, icon)
     .overview-box__detail
@@ -66,7 +70,7 @@ block content
 
 
     section.section-map
-        #map
+        #map(data-locations=`${JSON.stringify(tour.locations)}`)
 
     section.section-reviews
         .reviews
@@ -78,8 +82,8 @@ block content
         .cta
             .cta__img.cta__img--logo
                 img(src='/img/logo-white.png', alt='Natours logo')
-            img.cta__img.cta__img--1(src='/img/tour-5-2.jpg', alt='')
-            img.cta__img.cta__img--2(src='/img/tour-5-1.jpg', alt='')
+            img.cta__img.cta__img--1(src=`/img/tours/${tour.images[1]}`, alt='Product picture')
+            img.cta__img.cta__img--2(src=`/img/tours/${tour.images[2]}`, alt='Product picture')
             .cta__content
                 h2.heading-secondary What are you waiting for?
                 p.cta__text 10 days. 1 adventure. Infinite memories. Make it yours today!
