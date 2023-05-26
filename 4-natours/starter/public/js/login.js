@@ -128,10 +128,15 @@ if(document.querySelector('.updateCurrentUser')){
     document.querySelector('.updateCurrentUser').addEventListener('submit', e => {
         e.preventDefault();
 
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
+        const form = new FormData();
+        form.append('name', document.getElementById('name').value);
+        form.append('email', document.getElementById('email').value);
+        form.append('photo', document.getElementById('photo').files[0]);
+        for(let key of form.entries()){
+            console.log(key[0], key[1]);
+        }
 
-        updateUserData({name, email}, 'data');
+        updateUserData(form, 'data');
     });
 }
 
@@ -149,6 +154,7 @@ if(document.querySelector('.form-user-settings')){
             password,
             passwordConfirm
         }, 'password');
+
         document.querySelector('.btn--save--password').textContent = 'Save password';
         document.getElementById('password-current').value = '';
         document.getElementById('password').value = '';
