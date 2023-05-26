@@ -24,8 +24,15 @@ router.use((req, res, next) => {
 });
 
 
-router.get('/', viewsController.getOverview);
-router.get('/tours/:tourName',authController.protect, viewsController.getTour);
+router.get('/signup', viewsController.getRegisterUserForm);
 router.get('/login', viewsController.getLoginUserForm);
+
+router.use(authController.isLoggedIn);
+
+router.get('/', viewsController.getOverview);
+router.get('/tours/:tourName', viewsController.getTour);
+
+
+
 
 module.exports = router;

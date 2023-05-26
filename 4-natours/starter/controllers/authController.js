@@ -105,6 +105,36 @@ exports.protect = catchAsync(async (req, res, next) => {
 	next()
 });
 
+exports.logout = (req, res) => {
+	res.clearCookie('jwt').status(200).json({ status: 'success' });
+};
+
+// Render pages middleware with no errors
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+	if(req.cookies.jwt){
+		token = req.cookies.jwt;
+
+		// 1) verify token
+		const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
+		console.log(decoded);
+
+		// 2) Check if user still exists
+		const freshUser = await User.findById(decoded.id);
+		if(!freshUser) {
+			return next();
+		}
+
+		// 3) Check if user change password after token was issued
+		if(freshUser.changedPasswordAfter(decoded.iat)) {
+			return next();
+		}
+		// Logged in User
+		res.locals.user = freshUser;
+	}
+	next();
+});
+
+
 exports.restrictTo = (...roles) => {
 	return(req, res, next) => {
 		//roles ['admin','lead-guide']. role='user'

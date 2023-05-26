@@ -1,0 +1,21 @@
+extends base
+
+block content
+    main.main
+        .login-form.registerUser
+            h2.heading-secondary.ma-bt-lg Create your account
+            form.form
+                .form__group
+                    label.form__label(for='name') Ім'я
+                    input#name.form__input(type='name', placeholder='Bob Average', required)
+                .form__group
+                    label.form__label(for='email') Email адреса
+                    input#email.form__input(type='email', placeholder='you@example.com', required)
+                .form__group.ma-bt-md
+                    label.form__label(for='password') Пароль
+                    input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
+                .form__group.ma-bt-md
+                    label.form__label(for='passwordConfirm') Підтвердити пароль
+                    input#passwordConfirm.form__input(type='password', placeholder='••••••••', required, minlength='8')
+                .form__group
+                    button.btn.btn--green Register

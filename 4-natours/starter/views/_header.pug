@@ -4,10 +4,15 @@ header.header
     .header__logo
         img(src='/img/logo-white.png' alt='Cheese Logo')
     nav.nav.nav--user
-        //a.nav__el(href='#') Мої замовлення
-        //a.nav__el(href='#')
-        //     img.nav__user-img(src='img/iser.jpg' alt='User photo')
-        //     span Nikita
-        a.button.nav__el Корзина
-        a.button.nav__el(href='/login') Sign in
-        a.button.nav__el.nav__el--cta(href='/signup') Sign up
+        if user
+            a.nav__el.nav__el--logout Log out
+            if user.role === 'user'
+                a.button.nav__el Корзина
+            if user.role === 'admin'
+                a.button.nav__el AdminBoard
+            a.nav__el(href='#')
+                img.nav__user-img(src=`/img/users/${user.photo}` alt=`${user.name} photo`)
+                span= user.name.split(' ')[0]
+        else
+            a.button.nav__el(href='/login') Sign in
+            a.button.nav__el.nav__el--cta(href='/signup') Sign up
