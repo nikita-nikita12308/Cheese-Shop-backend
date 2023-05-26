@@ -125,20 +125,21 @@ const updateUserData = async (data, type) => {
 };
 
 if(document.querySelector('.updateCurrentUser')){
-    document.querySelector('.updateCurrentUser').addEventListener('submit', e => {
+    document.querySelector('.updateCurrentUser').addEventListener('submit', async e => {
         e.preventDefault();
+        document.querySelector('.btn--save--userdata').textContent = 'Updating...';
 
         const form = new FormData();
         form.append('name', document.getElementById('name').value);
         form.append('email', document.getElementById('email').value);
         form.append('photo', document.getElementById('photo').files[0]);
-        for(let key of form.entries()){
-            console.log(key[0], key[1]);
-        }
+        await updateUserData(form, 'data');
 
-        updateUserData(form, 'data');
+        document.querySelector('.btn--save--userdata').textContent = 'Save settings';
     });
 }
+
+
 
 if(document.querySelector('.form-user-settings')){
     document.querySelector('.form-user-settings').addEventListener('submit', async e => {

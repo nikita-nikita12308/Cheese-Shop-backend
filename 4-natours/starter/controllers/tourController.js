@@ -1,8 +1,32 @@
 const fs = require('fs');
+const multer = require('multer');
+const sharp = require('sharp');
 const Tour = require('./../models/tourModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const factory = require('./handlerFactory');
+
+
+// Multer Options Set
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, callback) => {
+	if(file.mimetype.startsWith('image')){
+		callback(null, true)
+	}else{
+		callback(new AppError('Not an image! Upload only images', 400), false)
+	}
+};
+
+const upload = multer({
+	storage: multerStorage,
+	fileFilter: multerFilter
+});
+
+exports.uploadProductImages = upload.fields([
+	{name: 'imageCover', maxCount: 1},
+	{name: 'images', maxCount: 3}
+]);
 
 exports.aliasTopTours = async (req, res, next) => {
 	req.query.limit = '5';
