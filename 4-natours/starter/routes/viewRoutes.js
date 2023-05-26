@@ -29,8 +29,10 @@ router.get('/login', viewsController.getLoginUserForm);
 
 router.use(authController.isLoggedIn);
 
+router.get('/me', authController.protect, viewsController.getAccount);
 router.get('/', viewsController.getOverview);
 router.get('/tours/:tourName', viewsController.getTour);
+
 
 
 

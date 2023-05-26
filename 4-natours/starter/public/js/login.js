@@ -25,7 +25,6 @@ const signup = async (name, email, password, passwordConfirm) => {
                 passwordConfirm
             }
         });
-        console.log(resultSignup.data.status)
         if (resultSignup.data.status === 'success') {
             showAlert('success', 'Register successfully! Please, Sign In');
             window.setTimeout(() => {
@@ -89,7 +88,9 @@ const logout = async () => {
         });
         if(res.data.status === 'success') {
             showAlert('success', 'Logged out successfully');
-            location.reload(true);
+            window.setTimeout(() => {
+                location.assign('/');
+            }, 1500);
         }
     }catch(e){
         showAlert('error', 'Error logging out! Try again')
@@ -100,4 +101,57 @@ if( document.querySelector('.nav__el--logout')) {
     document.querySelector('.nav__el--logout').addEventListener('click', logout);
 }
 
+const updateUserData = async (data, type) => {
+    try{
+        const url = type === 'password'
+            ? 'http://127.0.0.1:8000/api/v1/users/updateMyPassword'
+            : 'http://127.0.0.1:8000/api/v1/users/updateMe';
 
+        const updateRes = await axios({
+            method: 'PATCH',
+            url,
+            data
+        });
+        if (updateRes.data.status === 'success') {
+            showAlert('success', `${type.toUpperCase()} updated successfully`);
+            window.setTimeout(() => {
+                location.reload(true)
+            }, 1500);
+
+        }
+    }catch(e){
+        showAlert('error', e.response.data.message);
+    }
+};
+
+if(document.querySelector('.updateCurrentUser')){
+    document.querySelector('.updateCurrentUser').addEventListener('submit', e => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+
+        updateUserData({name, email}, 'data');
+    });
+}
+
+if(document.querySelector('.form-user-settings')){
+    document.querySelector('.form-user-settings').addEventListener('submit', async e => {
+        document.querySelector('.btn--save--password').textContent = 'Updating...';
+        e.preventDefault();
+
+        const passwordCurrent = document.getElementById('password-current').value;
+        const password = document.getElementById('password').value;
+        const passwordConfirm = document.getElementById('password-confirm').value;
+
+        await updateUserData({
+            passwordCurrent,
+            password,
+            passwordConfirm
+        }, 'password');
+        document.querySelector('.btn--save--password').textContent = 'Save password';
+        document.getElementById('password-current').value = '';
+        document.getElementById('password').value = '';
+        document.getElementById('password-confirm').value = '';
+    });
+}

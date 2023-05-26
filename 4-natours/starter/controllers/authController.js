@@ -88,10 +88,9 @@ exports.protect = catchAsync(async (req, res, next) => {
 
 	// 2) Validate token
 	const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-	console.log(decoded);
 
 	// 3) Check if user still exists
-	const freshUser = await User.findById(decoded.id)
+	const freshUser = await User.findById(decoded.id);
 	if(!freshUser) {
 		return next(new AppError('The user belonging to the token does no longer exist.', 401))
 	}
@@ -102,6 +101,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 	}
 	// GRANT ACCESS TO PROTECTED ROUTE
 	req.user = freshUser;
+	res.locals.user = freshUser;
 	next()
 });
 
@@ -116,7 +116,6 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
 
 		// 1) verify token
 		const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
-		console.log(decoded);
 
 		// 2) Check if user still exists
 		const freshUser = await User.findById(decoded.id);

@@ -43,3 +43,9 @@ exports.getRegisterUserForm = (req, res) => {
         title: 'Register'
     })
 };
+
+exports.getAccount = (req, res) => {
+    res.status(200).render('account', {
+        title: 'Мій кабінет'
+    })
+};
