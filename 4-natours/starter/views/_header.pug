@@ -10,7 +10,7 @@ header.header
         if user
             a.nav__el.nav__el--logout Log out
             if user.role === 'user' || user.role === 'guide'
-                a.button.nav__el
+                a.button.nav__el(href='/my-orders')
                     img(src='/img/icon-shop.png', style='width: 35px; filter: invert(100%);')
             if user.role === 'admin'
                 a.button.nav__el(href='/adminboard') AdminBoard

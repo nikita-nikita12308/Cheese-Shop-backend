@@ -1,7 +1,7 @@
 const express = require('express');
 const viewsController = require('../controllers/viewsController');
 const authController = require('../controllers/authController');
-
+const bookingController = require('../controllers/bookingController');
 const router = express.Router();
 
 // Set headers Policy for mapbox scripts
@@ -30,7 +30,8 @@ router.get('/login', viewsController.getLoginUserForm);
 router.use(authController.isLoggedIn);
 
 router.get('/me', authController.protect, viewsController.getAccount);
-router.get('/', viewsController.getOverview);
+router.get('/my-orders', authController.protect, viewsController.getMyOrders);
+router.get('/',bookingController.createBookingCheckOut, viewsController.getOverview);
 router.get('/tours/:tourName', viewsController.getTour);
 router.get('/adminboard', authController.protect, authController.restrictTo('admin'), viewsController.getAdminBoard);
 

@@ -13,7 +13,7 @@ block content
             nav.user-view__menu
                 ul.side-nav
                     +navItemAccount('#', 'Settings', 'settings', true)
-                    +navItemAccount('#', 'My bookings', 'briefcase', false)
+                    +navItemAccount('/my-orders', 'My orders', 'briefcase', false)
                     +navItemAccount('#', 'My reviews', 'star', false)
                     +navItemAccount('#', 'Billing', 'credit-card', false)
                 - if(user.role === 'admin')
