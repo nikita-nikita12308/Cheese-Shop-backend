@@ -24,27 +24,39 @@ app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARES
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+	helmet({
+		crossOriginEmbedderPolicy: false,
+	})
+);
 // Set security HTTP headers
 const scriptSrcUrls = [
+	'https://checkout.stripe.com/',
 	'https://unpkg.com/',
 	'https://tile.openstreetmap.org',
 	'https://*.mapbox.com',
 	'https://js.stripe.com',
 	'https://m.stripe.network',
-	'https://*.cloudflare.com'
+	'https://*.cloudflare.com',
+	'https://api.tiles.mapbox.com/',
+	'https://api.mapbox.com/',
+	'https://checkout.stripe.com'
 ];
 const styleSrcUrls = [
 	'https://unpkg.com/',
 	'https://tile.openstreetmap.org',
-	'https://fonts.googleapis.com/'
+	'https://fonts.googleapis.com/',
+	'https://checkout.stripe.com'
 ];
 const connectSrcUrls = [
 	'https://unpkg.com',
 	'https://*.mapbox.com',
 	'https://*.stripe.com',
 	'https://bundle.js:*',
-	'ws://127.0.0.1:*/'
+	'ws://127.0.0.1:*/',
+	'https://m.stripe.com',
 ];
+
 const fontSrcUrls = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 
 app.use(
@@ -61,20 +73,14 @@ app.use(
 			childSrc: ["'self'", 'blob:'],
 			imgSrc: ["'self'", 'blob:', 'data:', 'https:'],
 			formAction: ["'self'"],
-			connectSrc: [
-				"'self'",
-				"'unsafe-inline'",
-				'data:',
-				'blob:',
-				...connectSrcUrls
-			],
+			connectSrc: ["'self'", 'data:', 'blob:', 'https://checkout.stripe.com', 'https://js.stripe.com/v3/', ...connectSrcUrls],
 			upgradeInsecureRequests: []
 		}
 	})
 );
 app.use(
 	cors({
-		origin: 'http://127.0.0.1:8000',
+		origin: ['http://127.0.0.1:8000','https://checkout.stripe.com'],
 		credentials: true,
 	})
 );

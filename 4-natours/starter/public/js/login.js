@@ -162,3 +162,26 @@ if(document.querySelector('.form-user-settings')){
         document.getElementById('password-confirm').value = '';
     });
 }
+
+const bookTour = async (tourId) => {
+    try {
+        const session = await axios(`http://127.0.0.1:8000/api/v1/booking/checkout-session/${tourId}`);
+        console.log(session.data.url);
+        window.location.assign(session.data.url);
+    } catch(err) {
+        showAlert('error', err);
+        console.log(err.message)
+    }
+};
+
+const bookBtn = document.getElementById('book-tour');
+
+if(bookBtn){
+    bookBtn.addEventListener('click', e => {
+        e.target.textContent = 'Processing...';
+
+        const {tourId} = e.target.dataset;
+        console.log(tourId);
+        bookTour(tourId)
+    })
+}
