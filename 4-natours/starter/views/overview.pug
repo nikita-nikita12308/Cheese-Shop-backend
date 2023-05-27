@@ -2,6 +2,30 @@ extends base
 
 block content
     main.main
+        nav.filters(style='padding-bottom: 20px;')
+            ul.filters__list
+                li.filters__item
+                    a.filters__link(href='#')
+                        label.form__label(for='name') Рейтинг
+                            input#name.form__input(type='text', value=`${tours[0].ratingsAverage}`, required, name='name')
+                li.filters__item
+                    a.filters__link(href='#')
+                        label.form__label(for='name') Складність
+                            input#name.form__input(type='text', value=`${tours[0].difficulty}`, required, name='name')
+                li.filters__item
+                    a.filters__link(href='#')
+                        label.form__label(for='name') Звідки
+                            input#name.form__input(type='text', value=`${tours[0].startLocation.description}`, required, name='name')
+                a.btn.btn--green.btn--small(href=`/tours/$`, style='height: 50px; margin-top: 25px; margin-left:-10px; padding-right:') Знайти
+                li.filters__item
+                    a.filters__link(href='#')
+                        label.form__label(for='name') Сортувати ціну за:
+                a.btn.btn--green.btn--small(href=`/tours/$`, style='height: 50px; margin-top: 25px; margin-left:-10px;') Спаданням
+                a.btn.btn--green.btn--small(href=`/tours/$`, style='height: 50px; margin-top: 25px; margin-left:10px;') Зростанням
+                // Додайте інші пункти меню фільтрів за необхідністю
+
+
+
         .card-container
             each tour in tours
                 .card
@@ -39,4 +63,6 @@ block content
                         p.card__ratings
                             span.card__footer-value= tour.ratingsAverage
                             span.card__footer-text= ` rating (${tour.ratingsQuantity})`
-                        a.btn.btn--green.btn--small(href=`/tours/${tour.slug}`) Details
+                        a.btn.btn--green.btn--small(href=`/tours/${tour.slug}`) Деталі
+                        a.btn.btn.btn--small.btn--buy(href='#')
+                            img(src='/img/icon-shop.png', style='width: 20px;')

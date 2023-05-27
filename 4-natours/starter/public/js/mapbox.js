@@ -1,9 +1,9 @@
-const displayMap = (locations) => {
+const displayMap = async (locations) => {
     mapboxgl.accessToken = 'pk.eyJ1IjoibmlraXRvbjIyODkiLCJhIjoiY2xpMzMyNnFyMHM3dDNsbHBxbnh1bnF4eSJ9.3u00-ST0fxWR8p9USL-5XA';
 
-    var map = new mapboxgl.Map({
+    var map = await new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/nikiton2289/cli33r98r00k201quha6od1x7',
+        style: 'mapbox://styles/nikiton2289/cli4z16av02ls01pr6oxhffdv',
         scrollZoom: false
         //    center: [30.630167, 50.461622],
         //     zoom: 10,
@@ -43,6 +43,9 @@ const displayMap = (locations) => {
 };
 
 if(document.getElementById('map')){
+    window.addEventListener('load', function() {
+        window.scrollTo(0, 0);
+    });
     const locations = JSON.parse(document.getElementById('map').dataset.locations);
     displayMap(locations);
 }

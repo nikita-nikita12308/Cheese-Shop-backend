@@ -49,3 +49,9 @@ exports.getAccount = (req, res) => {
         title: 'Мій кабінет'
     })
 };
+
+exports.getAdminBoard = (req, res) => {
+    res.status(200).render('adminboard', {
+        title: 'Адмін панель'
+    })
+};

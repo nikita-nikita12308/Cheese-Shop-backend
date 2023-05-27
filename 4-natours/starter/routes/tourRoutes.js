@@ -39,10 +39,14 @@ router
 router
   .route('/:id')
   .get(tourController.getTour)
-  .patch(tourController.updateTour,
+  .patch(
       authController.protect,
-      authController.restrictTo('admin'),)
-  .delete(authController.protect,
+      authController.restrictTo('admin'),
+      tourController.uploadProductImages,
+      tourController.resizeProductImages,
+      tourController.updateTour)
+  .delete(
+      authController.protect,
       authController.restrictTo('admin'),
       tourController.deleteTour);
 

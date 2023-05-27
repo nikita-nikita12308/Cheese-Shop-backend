@@ -32,7 +32,7 @@ router.use(authController.isLoggedIn);
 router.get('/me', authController.protect, viewsController.getAccount);
 router.get('/', viewsController.getOverview);
 router.get('/tours/:tourName', viewsController.getTour);
-
+router.get('/adminboard', authController.protect, authController.restrictTo('admin'), viewsController.getAdminBoard);
 
 
 

@@ -1335,3 +1335,94 @@ body {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
+
+.filters {
+  /* Стилі для меню фільтрів */
+}
+
+.filters__list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.filters__item {
+  margin-right: 10px;
+}
+
+.filters__link {
+  text-decoration: none;
+  color: #444;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.submenu {
+  display: none; /* Приховуємо підменю за замовчуванням */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  list-style: none;
+  z-index: 999;
+}
+
+.submenu__item {
+  margin-bottom: 5px;
+}
+
+.submenu__link {
+  text-decoration: none;
+  color: #666;
+}
+
+/* Стилі для адмін-панелі */
+.admin-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-panel__nav {
+  margin-bottom: 20px;
+}
+
+.admin-panel__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-panel__item {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.admin-panel__link {
+  text-decoration: none;
+  color: #000;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.admin-panel__link:hover {
+  background-color: #f0f0f0;
+}
+
+.admin-panel__content {
+  width: 100%;
+}
+
+/* Стилі для сторінок адмін-панелі */
+.admin-panel__page {
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+
+.admin-panel__page h2 {
+  margin-top: 0;
+}
