@@ -1,7 +1,9 @@
 header.header
     nav.nav.nav--tours
-        a.nav__el(href='/') All products
-        a.nav__el(href='/') Review
+        a.nav__el(href='/') Всі продукти
+        if user
+            a.nav__el(href=`/me/reviews/${user._id}`)
+                img(src='/img/icon-review.png' style='filter: invert(100%); height: 40px; padding-left: 10px;')
 
     .header__logo
         img(src='/img/favicon3.png' alt='Cheese Logo')
@@ -12,8 +14,6 @@ header.header
             if user.role === 'user' || user.role === 'guide'
                 a.button.nav__el(href='/my-orders')
                     img(src='/img/icon-shop.png', style='width: 35px; filter: invert(100%);')
-            if user.role === 'admin'
-                a.button.nav__el(href='/adminboard') AdminBoard
             a.nav__el(href='/me')
                 img.nav__user-img(src=`/img/users/${user.photo}` alt=`${user.name} photo`)
                 span= user.name.split(' ')[0]

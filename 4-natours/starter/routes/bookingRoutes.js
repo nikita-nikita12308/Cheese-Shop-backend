@@ -7,7 +7,7 @@ const reviewRouter = require('./../routes/reviewRoutes');
 const router = express.Router();
 router.use(authController.protect);
 
-router.get('/checkout-session/:tourId',
+router.get('/checkout-session/:productId',
     bookingController.getCheckOutSession);
 
 router.use(authController.restrictTo('admin', 'lead-guide'));

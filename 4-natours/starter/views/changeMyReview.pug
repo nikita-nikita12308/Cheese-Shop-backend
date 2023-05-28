@@ -1,0 +1,55 @@
+extends base
+include _reviewCard
+
+mixin navItemAccount(link, text, icon, active)
+    li(class=`${active ? 'side-nav--active' : ''}`)
+        a(href=`${link}`)
+            svg
+                use(xlink:href=`/img/icons.svg#icon-${icon}`)
+            | #{text}
+
+block content
+    main.main
+        .user-view
+            nav.user-view__menu
+                ul.side-nav
+                    +navItemAccount('/me', 'Налаштування', 'settings', false)
+                    +navItemAccount('/my-orders', 'My Замовлення', 'briefcase', false)
+                    +navItemAccount(`/me/reviews/${user.id}`, 'Мої відгуки', 'star', true)
+                    +navItemAccount('/billing', 'Історія Платежів', 'credit-card', false)
+                - if(user.role === 'admin')
+                    .admin-nav
+                        h5.admin-nav__heading Admin
+                        ul.side-nav
+                            +navItemAccount('#', 'Manage tours', 'map', false)
+                            +navItemAccount('#', 'Manage users', 'users', false)
+                            +navItemAccount('#', 'Manage reviews', 'star', false)
+                            +navItemAccount('#', 'Manage booking', 'briefcase', false)
+
+
+            .user-view__content
+                .user-view__form-container.updateCurrentUser
+                    .user-view__content
+                        .user-view__form-container.updateCurrentUser
+                            if review[0].tour
+                                h2.heading-secondary.ma-bt-md= `Змінити Відгук до:${review[0].tour.name}`
+                            else
+                                h2.heading-secondary.ma-bt-md= `Змінити Відгук`
+                            form.form.form-user-data
+                                .form__group
+                                    label.form__label(for='name') Текст
+                                    input#name.form__input(type='text', value=`${review[0].review}`, required, name='name')
+                                .form__group
+                                    label.form__label(for='name') Рейтинг
+                                    input#name.form__input(type='text', value=`${review[0].rating}`, required, name='name')
+                                .form__group.right
+                                    button.btn.btn--small.btn--green.btn--save--userdata Зберегти
+                    .user-view__content
+                        .user-view__form-container.updateCurrentUser
+                            h2.heading-secondary.ma-bt-md Видалити Відгук
+                            form.form.form-user-data
+                                .form__group
+                                    button.btn.btn--small.btn--green.btn--save--userdata Видалити
+
+
+

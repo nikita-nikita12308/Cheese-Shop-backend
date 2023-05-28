@@ -1,0 +1,54 @@
+extends base
+include _reviewCard
+
+mixin navItemAccount(link, text, icon, active)
+    li(class=`${active ? 'side-nav--active' : ''}`)
+        a(href=`${link}`)
+            svg
+                use(xlink:href=`/img/icons.svg#icon-${icon}`)
+            | #{text}
+
+block content
+    main.main
+        .user-view
+            nav.user-view__menu
+                ul.side-nav
+                    +navItemAccount('/me', 'Налаштування', 'settings', false)
+                    +navItemAccount('/my-orders', 'My Замовлення', 'briefcase', false)
+                    +navItemAccount(`/me/reviews/${user.id}`, 'Мої відгуки', 'star', true)
+                    +navItemAccount('/billing', 'Історія Платежів', 'credit-card', false)
+                - if(user.role === 'admin')
+                    .admin-nav
+                        h5.admin-nav__heading Admin
+                        ul.side-nav
+                            +navItemAccount('#', 'Manage tours', 'map', false)
+                            +navItemAccount('#', 'Manage users', 'users', false)
+                            +navItemAccount('#', 'Manage reviews', 'star', false)
+                            +navItemAccount('#', 'Manage booking', 'briefcase', false)
+
+
+            .user-view__content
+                .user-view__form-container.updateCurrentUser
+                    if reviews
+                        .user-view__content.my__reviews_container
+                            .user-view__form-container
+                                h2.heading-secondary.ma-bt-md.my__reviews_h= `Відгуки користувача - ${reviews[0].user.name}`
+                            .reviews
+                                each review in reviews
+                                    .reviews__card
+                                        a.review__delete(href=`/me/reviews/${user.id}/change/${review.id}`)
+                                            img(src='/img/icon-delete.png' style='height: 25px;')
+                                        .reviews__avatar
+                                            img.reviews__avatar-img(src=`/img/users/${review.user.photo}`, alt=`${review.user.name}`)
+                                            h6.reviews__user= review.user.name
+                                        p.reviews__text= review.review
+                                        .reviews__rating
+                                            each star in [1, 2, 3, 4, 5]
+                                                svg.reviews__star(class=`reviews__star--${review.rating >= star ? 'active' : 'inactive'}`)
+                                                    use(xlink:href='/img/icons.svg#icon-star')
+                                        a.heading-secondary.review__change(href=`/me/reviews/${user.id}/change/${review.id}`) Change Review
+
+                    else
+                        h1 Залиште відгук і вони відобразяться тут
+
+

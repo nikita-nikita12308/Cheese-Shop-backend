@@ -1,0 +1,95 @@
+extends base
+include _reviewCard
+
+block append head
+    link(href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet')
+    script(src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js')
+
+    //-script(src='/js/mapbox.js')
+
+
+mixin overviewBox(label, text, icon)
+    .overview-box__detail
+        svg.overview-box__icon
+            use(xlink:href=`/img/icons.svg#icon-${icon}`)
+        span.overview-box__label= label
+        span.overview-box__text= text
+
+
+block content
+    section.section-header
+        .header__hero
+            .header__hero-overlay &nbsp;
+            img.header__hero-img(src=`/img/tours/${product.imageCover}`, alt=`${product.name}`)
+
+        .heading-box
+            h1.heading-primary
+                span= product.name
+            .heading-box__group
+                .heading-box__detail
+                    svg.heading-box__icon
+                        use(xlink:href='/img/icons.svg#icon-clock')
+                    span.heading-box__text= `${product.durationAging} днів витримки`
+                .heading-box__detail
+                    svg.heading-box__icon
+                        use(xlink:href='/img/icons.svg#icon-map-pin')
+                    span.heading-box__text= product.mainStoreLocation.description
+
+    section.section-description
+        .overview-box
+            div
+                .overview-box__group
+                    h2.heading-secondary.ma-bt-lg Факти
+
+                    - const date = product.cheeseCreateDates[0].toLocaleString('uk-ua', { month: 'long', year: 'numeric'})
+
+                    +overviewBox('Вироблено:', date, 'calendar')
+                    +overviewBox('Калорійність:', product.calories, 'trending-up')
+                    +overviewBox('Вага', `${product.weight} грам`, 'user')
+                    +overviewBox('Рейтинг', `${product.ratingsAverage} / 5`, 'star')
+
+
+                each personal in product.personal
+                    .overview-box__detail
+                        img.overview-box__img(src=`/img/users/${personal.photo}`, alt=`${personal.name}`)
+
+                        - if (guide.role === 'lead-guide')
+                            span.overview-box__label Lead Cheese Maker
+                        - if (guide.role === 'guide')
+                            span.overview-box__label Cheese maker
+                        span.overview-box__text= personal.name
+
+        .description-box
+            h2.heading-secondary.ma-bt-lg= `Про ${product.name} набір`
+            -const paragrafs = product.description.split('\n')
+            each p in paragrafs
+                p.description__text= p
+
+    section.section-pictures
+        each image, i in product.images
+            .picture-box
+                img.picture-box__img(src=`/img/products/${image}`, alt=`The Park Camper Tour ${i + 1}`, class=`picture-box__img--${i+1}`)
+
+
+    section.section-map
+        #map(data-locations=`${JSON.stringify(product.storeLocations)}`)
+
+    section.section-reviews
+        .reviews
+            each review in product.reviews
+                +reviewCard(review)
+
+
+    section.section-cta
+        .cta
+            .cta__img.cta__img--logo
+                img(src='/img/favicon3.png', alt='Cheese logo')
+            img.cta__img.cta__img--1(src=`/img/products/${product.images[1]}`, alt='Product picture')
+            img.cta__img.cta__img--2(src=`/img/products/${product.images[2]}`, alt='Product picture')
+            .cta__content
+                h2.heading-secondary Чого ти ще , зволікаєш ?
+                p.cta__text= `Сирна насолода: ${product.weight} грамм унікального досвіду. Неперевершений смак. Зроби це сьогодні !`
+                if user
+                    button.btn.btn--green.span-all-rows#book-tour(data-product-id=`${product.id}`) Замовити
+                else
+                    a.button.btn.btn--green.span-all-rows(href='/login') Увійти , щоб замовити !

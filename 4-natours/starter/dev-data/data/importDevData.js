@@ -2,6 +2,7 @@ const fs = require('fs');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const Tour = require('./../../models/tourModel');
+const Product = require('./../../models/productModel');
 const User = require('./../../models/userModel');
 const Review = require('./../../models/reviewModel');
 
@@ -17,13 +18,15 @@ mongoose.connect(DB).then(() => {
 // read json file
 
 const tours = JSON.parse(fs.readFileSync('./tours.json', 'utf-8'));
+const products = JSON.parse(fs.readFileSync('./products.json', 'utf-8'));
 const users = JSON.parse(fs.readFileSync('./users.json', 'utf-8'));
 const reviews = JSON.parse(fs.readFileSync('./reviews.json', 'utf-8'));
 // Import data into database
 
 const importData = async () => {
 	try{
-		await Tour.create(tours);
+		//await Tour.create(tours);
+		await Product.create(products);
 		await User.create(users, { validateBeforeSave: false });
 		await Review.create(reviews);
 		console.log('data successfuly loaded')
@@ -37,7 +40,8 @@ const importData = async () => {
 
 const deleteData = async () => {
 	try{
-		await Tour.deleteMany();
+		//await Tour.deleteMany();
+		await Product.deleteMany();
 		await User.deleteMany();
 		await Review.deleteMany();
 		console.log('data successfuly deleted')

@@ -1,46 +1,45 @@
-const Tours = require('../models/tourModel');
+//const Tours = require('../models/tourModel');
+const Products = require('../models/productModel');
 const Bookings = require('../models/bookingModel');
+const Reviews = require('../models/reviewModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
 exports.getOverview = catchAsync( async (req, res, next) => {
-    const tours = await Tours.find();
+    const products = await Products.find();
 
     res.status(200).render('overview', {
         title: 'All products',
-        tours
+        products
     })
 });
 
-exports.getTour = catchAsync( async (req, res, next) => {
-    //1) Get data for the req tour (including reviews and tour guides)
-    //2) Template
-    //3) Render template using the data from step
-    const tour = await Tours.findOne({ slug: req.params.tourName}).populate({
+exports.getProduct = catchAsync( async (req, res, next) => {
+    const product = await Products.findOne({ slug: req.params.productName}).populate({
         path: 'reviews',
         fields: 'review rating user'
     });
 
-    if(!tour) {
+    if(!product) {
         return next(new AppError('There is no product with that name.', 404));
     }
 
-    res.status(200).render('tour', {
-        title: tour.name,
-        tour
+    res.status(200).render('product', {
+        title: product.name,
+        product
     })
 });
 
 exports.getMyOrders = catchAsync(async (req, res, next) => {
     // 1) find Bookings
     const orders = await Bookings.find({user: req.user.id});
-    // 2) find tours with returned ids
-    const productIDs = orders.map(el => el.tour);
-    const tours = await Tours.find({ _id: {$in: productIDs}});
+    // 2) find products with returned ids
+    const productIDs = orders.map(el => el.product);
+    const products = await Products.find({ _id: {$in: productIDs}});
 
     res.status(200).render('overview', {
         title: 'My Orders',
-        tours
+        products
     })
 });
 
@@ -65,5 +64,35 @@ exports.getAccount = (req, res) => {
 exports.getAdminBoard = (req, res) => {
     res.status(200).render('adminboard', {
         title: 'Адмін панель'
+    })
+};
+
+exports.getMyReviews = async (req, res) => {
+    const reviews = await Reviews.find({user: req.user.id}).populate({
+        path: 'product',
+        fields: 'name'
+    });
+    res.status(200).render('myReviews', {
+        title: 'My Reviews',
+        reviews
+    })
+};
+
+exports.getMyBilling = async (req, res) => {
+    const orders = await Bookings.find({user: req.user.id});
+    res.status(200).render('paymentsHistory', {
+        title: 'Платежі',
+        orders
+    })
+};
+
+exports.getChangeMyReviews = async (req, res) => {
+    const review = await Reviews.find({_id: req.params.reviewId}).populate({
+        path: 'product',
+        fields: 'name'
+    });
+    res.status(200).render('changeMyReview', {
+        title: 'Змінити Відгук',
+        review
     })
 };

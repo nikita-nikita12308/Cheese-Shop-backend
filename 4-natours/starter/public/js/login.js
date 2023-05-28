@@ -163,9 +163,9 @@ if(document.querySelector('.form-user-settings')){
     });
 }
 
-const bookTour = async (tourId) => {
+const bookTour = async (productId) => {
     try {
-        const session = await axios(`http://127.0.0.1:8000/api/v1/booking/checkout-session/${tourId}`);
+        const session = await axios(`http://127.0.0.1:8000/api/v1/booking/checkout-session/${productId}`);
         console.log(session.data.url);
         window.location.assign(session.data.url);
     } catch(err) {
@@ -180,8 +180,7 @@ if(bookBtn){
     bookBtn.addEventListener('click', e => {
         e.target.textContent = 'Processing...';
 
-        const {tourId} = e.target.dataset;
-        console.log(tourId);
-        bookTour(tourId)
+        const {productId} = e.target.dataset;
+        bookTour(productId)
     })
 }

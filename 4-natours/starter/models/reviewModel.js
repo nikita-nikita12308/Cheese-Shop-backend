@@ -1,6 +1,6 @@
-// review / rating / createdAt / ref to tour / ref to to user
 const mongoose = require('mongoose');
-const Tour = require('./tourModel');
+//const Tour = require('./tourModel');
+const Product = require('./productModel');
 
 const reviewSchema = new mongoose.Schema({
     review: {
@@ -17,10 +17,10 @@ const reviewSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    tour: {
+    product: {
         type: mongoose.Schema.ObjectId,
-        ref: 'Tour',
-        required: [true, 'Review must belong to a Tour.']
+        ref: 'Product',
+        required: [true, 'Review must belong to a Product.']
     },
     user: {
         type: mongoose.Schema.ObjectId,
@@ -33,7 +33,7 @@ const reviewSchema = new mongoose.Schema({
         toObject: { virtuals: true }
     });
 
-reviewSchema.index({ tour: 1, user: 1}, { unique: true });
+reviewSchema.index({ product: 1, user: 1}, { unique: true });
 
 reviewSchema.pre(/^find/, function(next){
     //this.populate({
@@ -51,14 +51,14 @@ reviewSchema.pre(/^find/, function(next){
     next();
 });
 
-reviewSchema.statics.calcAverageRatings = async function(tourId) {
+reviewSchema.statics.calcAverageRatings = async function(productId) {
     const stats = await this.aggregate([
         {
-            $match: { tour: tourId }
+            $match: { product: productId }
         },
         {
             $group: {
-                _id: '$tour',
+                _id: '$product',
                 nRating: { $sum: 1 },
                 avgRating: { $avg: '$rating' }
             }
@@ -66,12 +66,12 @@ reviewSchema.statics.calcAverageRatings = async function(tourId) {
     ]);
     console.log(stats);
     if(stats.length > 0 ){
-        await Tour.findByIdAndUpdate(tourId, {
+        await Product.findByIdAndUpdate(productId, {
             ratingsQuantity: stats[0].nRating,
             ratingsAverage: stats[0].avgRating
         });
     } else {
-        await Tour.findByIdAndUpdate(tourId, {
+        await Product.findByIdAndUpdate(productId, {
             ratingsQuantity: 0,
             ratingsAverage: 4.5 });
     }
@@ -80,7 +80,7 @@ reviewSchema.statics.calcAverageRatings = async function(tourId) {
 reviewSchema.post('save', function(){
     // this points to current review
 
-    this.constructor.calcAverageRatings(this.tour);
+    this.constructor.calcAverageRatings(this.product);
 
 });
 
@@ -90,7 +90,7 @@ reviewSchema.pre(/^findOneAnd/, async function(next) {
 });
 
 reviewSchema.post(/^findOneAnd/, async function() {
-    await this.r.constructor.calcAverageRatings(this.r.tour);
+    await this.r.constructor.calcAverageRatings(this.r.product);
 });
 
 const Review = mongoose.model('Review', reviewSchema);

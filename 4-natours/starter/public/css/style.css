@@ -1415,3 +1415,24 @@ body {
 .admin-panel__page h2 {
   margin-top: 0;
 }
+
+.review__delete {
+  text-decoration: none;
+  margin-right: -200px;
+}
+
+.review__delete img:hover{
+  background-image: url('/img/icon-delete-hover.png')
+}
+
+.review__change {
+  margin-top: 15px;
+  text-decoration: none;
+  font-size: 15px;
+}
+.review__change:hover {
+  margin-top: 15px;
+  text-decoration: none;
+  font-size: 15px;
+  background-image: -webkit-gradient( linear, left top, right top, from(#7dd56f), to(#28b487) );
+}
