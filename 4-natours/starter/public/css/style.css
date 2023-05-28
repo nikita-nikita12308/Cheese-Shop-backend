@@ -121,7 +121,7 @@ body {
     from(#7dd56f),
     to(#28b487)
   );
-  background-image: linear-gradient(to right, #7dd56f, #28b487);
+  background-image: linear-gradient(to right bottom, #d5d26f, #b4b228);
   -webkit-background-clip: text;
   color: transparent;
   letter-spacing: 0.1rem;
@@ -159,11 +159,7 @@ body {
     from(rgba(125, 213, 111, 0.85)),
     to(rgba(40, 180, 135, 0.85))
   );
-  background-image: linear-gradient(
-    to bottom right,
-    rgba(125, 213, 111, 0.85),
-    rgba(40, 180, 135, 0.85)
-  );
+  background-image: linear-gradient( to bottom right, rgb(255 212 0 / 85%), rgb(180 176 40 / 85%) );
 }
 
 .heading-primary {
@@ -219,7 +215,7 @@ body {
 
 .btn:focus {
   outline: none;
-  background-color: #2e864b;
+  background-color: #aba93b;
 }
 
 .btn--white {
@@ -231,11 +227,11 @@ body {
 }
 
 .btn--green {
-  background-color: #55c57a;
+  background-color: #c5c455;
   color: #fff;
 }
 .btn--green::after {
-  background-color: #55c57a;
+  background-color: #d3d298;
 }
 
 .btn--small {
@@ -323,7 +319,7 @@ body {
   }
 }
 .header__logo img {
-  height: 3.5rem;
+  height: 6.5rem;
 }
 @media only screen and (max-width: 62.5em) {
   .header__logo {
@@ -375,7 +371,7 @@ body {
     from(#7dd56f),
     to(#28b487)
   );
-  background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
+  background-image: linear-gradient(to right bottom, #d5d26f, #b4b228);
   opacity: 0.85;
 }
 
@@ -584,7 +580,7 @@ body {
     from(#7dd56f),
     to(#28b487)
   );
-  background: linear-gradient(to right bottom, #7dd56f, #28b487);
+  background-image: linear-gradient(to right bottom, #d5d26f, #b4b228);
   clip-path: polygon(
     0 var(--section-rotate),
     100% 0,
@@ -715,14 +711,7 @@ body {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right bottom,
-    from(#7dd56f),
-    to(#28b487)
-  );
-  background: linear-gradient(to right bottom, #7dd56f, #28b487);
+
   z-index: 10;
   -webkit-transform: translate(-35%, -50%);
   transform: translate(-35%, -50%);
@@ -779,7 +768,7 @@ body {
     from(#7dd56f),
     to(#28b487)
   );
-  background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
+  background-image: linear-gradient(to right bottom, #d5d26f, #b4b228);
   padding: 4rem 0;
 }
 .user-view__content {
@@ -1115,7 +1104,7 @@ body {
     from(#7dd56f),
     to(#28b487)
   );
-  background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
+  background-image: linear-gradient(to right bottom, #d5d26f, #b4b228);
   opacity: 0.7;
 }
 .card__picture-img {

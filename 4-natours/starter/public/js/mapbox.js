@@ -3,7 +3,7 @@ const displayMap = async (locations) => {
 
     var map = await new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/nikiton2289/cli4z16av02ls01pr6oxhffdv',
+        style: 'mapbox://styles/nikiton2289/cli78f3th02ri01pgd1kb94gf',
         scrollZoom: false
         //    center: [30.630167, 50.461622],
         //     zoom: 10,
