@@ -30,7 +30,7 @@ router
   .route('/')
   .get(productController.getAllProducts)
   .post(authController.protect,
-      authController.restrictTo('admin', 'guide'),
+      authController.restrictTo('admin', 'chief-cheese-maker'),
       productController.createProduct);
 
 router
