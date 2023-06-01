@@ -10,7 +10,7 @@ header.header
     nav.nav.nav--user
 
         if user
-            a.nav__el.nav__el--logout Log out
+            a.nav__el.nav__el--logout Вийти
             if user.role === 'user' || user.role === 'guide'
                 a.button.nav__el(href='/my-orders')
                     img(src='/img/icon-shop.png', style='width: 35px; filter: invert(100%);')
@@ -18,5 +18,5 @@ header.header
                 img.nav__user-img(src=`/img/users/${user.photo}` alt=`${user.name} photo`)
                 span= user.name.split(' ')[0]
         else
-            a.button.nav__el(href='/login') Sign in
-            a.button.nav__el.nav__el--cta(href='/signup') Sign up
+            a.button.nav__el(href='/login') Увійти
+            a.button.nav__el.nav__el--cta(href='/signup') Зареєструватися
