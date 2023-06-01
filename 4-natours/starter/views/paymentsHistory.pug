@@ -28,7 +28,7 @@ block content
 
             .user-view__content
                 .user-view__form-container.updateCurrentUser
-                    if orders.order
+                    if orders
                         h2.heading-secondary.ma-bt-md Платежі
                         each order in orders
                             .card(style='padding-bottom: 15px')
@@ -46,7 +46,8 @@ block content
                                     - else
                                         h3(style='color: red;') Відмова
                                         img(src='/img/icon-delete-hover.png' style='height: 40px')
-                    h2.heading-secondary.ma-bt-md Платежів ще не було, зробіть своє перше замовлення
+                    else
+                        h2.heading-secondary.ma-bt-md Платежів ще не було, зробіть своє перше замовлення
 
 
                 .line &nbsp;
@@ -54,7 +55,5 @@ block content
                     h2.heading-secondary.ma-bt-md Написати Адміністратору
                     form.form.form-user-settings
                         .form__group
-                            label.form__label(for='password-current') Поточний пароль
-                            input#password-current.form__input(type='text', placeholder='Немає мого замовлення', required, minlength='8')
-                        .form__group.right
-                            button.btn.btn--small.btn--green.btn--save--password Відправити
+                            label.form__label(for='password-current') Email: ndatkiy@gmail.com
+

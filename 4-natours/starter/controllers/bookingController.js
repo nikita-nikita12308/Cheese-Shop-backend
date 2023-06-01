@@ -26,7 +26,7 @@ exports.getCheckOutSession = catchAsync( async (req, res, next) => {
                     product_data: {
                         name: `${product.name} Cheese`,
                         description: product.summary,
-                        images: [`https://www.natours.dev/img/tours/${product.imageCover}`],
+                        images: ['https://github.com/nikita-nikita12308/Cheese-Shop-backend/blob/main/4-natours/starter/public/img/products/product-5c88fa8cf4afda39709c2961-1685633640234-cover.jpeg'],
                     },
                 },
             },
