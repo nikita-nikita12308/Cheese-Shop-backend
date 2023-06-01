@@ -26,7 +26,7 @@ const displayMap = async (locations) => {
         new mapboxgl.Popup({
             offset: 30
         }).setLngLat(loc.coordinates)
-            .setHTML(`<p>Магазин ${loc.shopType}: ${loc.description}</p>`)
+            .setHTML(`<p>Магазин в: ${loc.description}</p>`)
             .addTo(map);
 
         bounds.extend(loc.coordinates);

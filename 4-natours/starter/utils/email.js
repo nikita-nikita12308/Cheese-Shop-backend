@@ -55,7 +55,7 @@ module.exports = class Email {
         await this.newTransport().sendMail(mailOptions);
     };
     sendWelcome = async function () {
-        await this.send('welcome', `Welcome to Natours ${this.firstName}!`);
+        await this.send('welcome', `Welcome to Real Cheese ${this.firstName}!`);
     };
     async sendPasswordReset() {
         await this.send('passwordReset', `Your password reset token (valid for 10 min)`)

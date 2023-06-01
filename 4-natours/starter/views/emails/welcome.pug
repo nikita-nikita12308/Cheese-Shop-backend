@@ -1,9 +1,9 @@
 extends baseEmail
 
 block content
-    p Hi #{firstName},
-        p Welcome to Cheese Shop, we're glad to have you 🎉🙏
-        p We're all a big familiy here, so make sure to upload your user photo so we get to know you a bit better!
+    p Привіт #{firstName},
+        p Ласкаво просимо до Cheese Shop, ми раді вам 🎉🙏
+        p Ми всі тут велика сім’я, тож обов’язково завантажте своє фото користувача, щоб ми познайомилися з вами трохи краще!
         table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
             tbody
                 tr
@@ -12,6 +12,6 @@ block content
                             tbody
                                 tr
                                     td
-                                        a(href=`${url}`, target='_blank') Upload user photo
-        p If you need any help with booking your next tour, please don't hesitate to contact me!
+                                        a(href=`${url}`, target='_blank') Завантажити фото користувача
+        p Якщо вам потрібна допомога з замовленням наступного продукту, будь ласка, не соромтеся зв’язуватися зі мною!
         p - Nikita Datskiy, IK-91
