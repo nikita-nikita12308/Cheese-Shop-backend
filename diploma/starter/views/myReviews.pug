@@ -29,7 +29,8 @@ block content
 
             .user-view__content
                 .user-view__form-container.updateCurrentUser
-                    if reviews
+                    if reviews.user
+                        - console.log("Reviews:" + reviews)
                         .user-view__content.my__reviews_container
                             .user-view__form-container
                                 h2.heading-secondary.ma-bt-md.my__reviews_h= `Відгуки користувача - ${reviews[0].user.name}`
