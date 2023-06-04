@@ -11,7 +11,6 @@ block content
                             img.card__picture-img(src=`/img/products/${product.imageCover}`, alt=`${product.name}`)
                         h3.heading-tertirary
                             span= product.name
-
                     .card__details
                         h4.card__sub-heading= `${product.calories} калорій, ${product.durationAging}-денний Сир`
                         p.card__text= product.summary
@@ -41,5 +40,5 @@ block content
                             span.card__footer-text= ` рейтинг (${product.ratingsQuantity})`
                         a.btn.btn--green.btn--small(href=`/products/${product.slug}`) Деталі
                         if user
-                            a.btn.btn.btn--small.btn--buy#book-tour(data-tour-id=`${product.id}`)
+                            a.btn.btn.btn--small.btn--buy.add-to-cart-button(data-product-name= product.name)
                                 img(src='/img/icon-shop.png', style='width: 20px;')

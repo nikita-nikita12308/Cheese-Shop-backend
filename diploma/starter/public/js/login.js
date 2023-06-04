@@ -184,3 +184,22 @@ if(bookBtn){
         bookTour(productId)
     })
 }
+
+// Filters
+
+// bucket
+const addToCartButtons = document.querySelectorAll('.add-to-cart-button');
+addToCartButtons.forEach((button) => {
+    button.addEventListener('click', addToCart);
+});
+
+function addToCart(event) {
+    event.stopPropagation(); // Зупинка подальшого поширення події
+    let productName = this.dataset.productName;
+    productName = `Сир  '${productName}' додано в корзину`;
+    localStorage.setItem('productName', productName);
+    showAlert('success', productName);
+    const cheese = localStorage.getItem('productName')
+    console.log("Додано сир: " + cheese)
+}
+
