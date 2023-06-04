@@ -28,7 +28,7 @@ block content
 
             .user-view__content
                 .user-view__form-container.updateCurrentUser
-                    if orders
+                    if orders.order
                         h2.heading-secondary.ma-bt-md Платежі
                         each order in orders
                             .card(style='padding-bottom: 15px')
