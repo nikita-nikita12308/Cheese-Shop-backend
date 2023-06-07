@@ -96,3 +96,10 @@ exports.getChangeMyReviews = async (req, res) => {
         review
     })
 };
+
+exports.getProductManage = async (req, res) => {
+    res.status(200).render('productManage', {
+        title: 'Управління продуктами',
+        review
+    })
+};

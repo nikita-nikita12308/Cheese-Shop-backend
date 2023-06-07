@@ -29,15 +29,18 @@ router.get('/login', viewsController.getLoginUserForm);
 
 router.use(authController.isLoggedIn);
 
+
+//All roles
 router.get('/me', authController.protect, viewsController.getAccount);
 router.get('/my-orders', authController.protect, viewsController.getMyOrders);
 router.get('/',bookingController.createBookingCheckOut, viewsController.getOverview);
 router.get('/products/:productName', viewsController.getProduct);
-router.get('/adminboard', authController.protect, authController.restrictTo('admin'), viewsController.getAdminBoard);
 router.get('/me/reviews/:userId', authController.protect, viewsController.getMyReviews);
 router.get('/billing', authController.protect, viewsController.getMyBilling);
 router.get('/me/reviews/:userId/change/:reviewId', authController.protect, viewsController.getChangeMyReviews);
-
+//admin
+router.get('/adminboard', authController.protect, authController.restrictTo('admin'), viewsController.getAdminBoard);
+router.get('/product-manage', authController.protect, authController.restrictTo('admin'), viewsController.getProductManage);
 
 
 module.exports = router;
