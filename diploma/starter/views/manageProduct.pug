@@ -1,0 +1,56 @@
+extends base
+
+mixin navItemAccount(link, text, icon, active)
+    li(class=`${active ? 'side-nav--active' : ''}`)
+        a(href=`${link}`)
+            svg
+                use(xlink:href=`img/icons.svg#icon-${icon}`)
+            | #{text}
+
+block content
+    main.main
+        .user-view
+            nav.user-view__menu
+                ul.side-nav
+                    +navItemAccount('/me', 'Налаштування', 'settings', false)
+                    +navItemAccount('/my-orders', 'My Замовлення', 'briefcase', false)
+                    +navItemAccount(`/me/reviews/${user.id}`, 'Мої відгуки', 'star', false)
+                    +navItemAccount('/billing', 'Історія Платежів', 'credit-card', false)
+                - if(user.role === 'admin')
+                .admin-nav
+                    h5.admin-nav__heading Admin
+                    ul.side-nav
+                        +navItemAccount('#', 'Керування продуктами', 'map', true)
+                        +navItemAccount('#', 'Керування користувачами', 'users', false)
+                        +navItemAccount('#', 'Керування відгуками', 'star', false)
+                        +navItemAccount('#', 'Замовлення', 'briefcase', false)
+
+
+            .user-view__content
+                .user-view__form-container.updateCurrentUser
+                    h2.heading-secondary.ma-bt-md Керування продуктами
+                    form.form.form-user-data
+                        .form__group
+                            label.form__label(for='name')= `Всього продуктів: ${products.length}`
+
+                        .form__group.ma-bt-md
+                            label.form__label(for='email') Статистика:
+                            each stat in stats
+                                h2= stat._id
+
+                        .form__group.right
+                            button.btn.btn--small.btn--green.btn--save--userdata Створити Продукт
+                .line &nbsp;
+                .user-view__form-container
+                    h2.heading-secondary.ma-bt-md Продукти на вітрині
+                    nav.pagination
+                        ul
+                            - let currentPage = 1; // Поточна сторінка
+                            - let totalPages = products.length / 3; // Загальна кількість сторінок
+                            each page in Array.from({ length: totalPages }, (_, i) => i + 1)
+                                li
+                                    button.btn.page-button(href="#" data-page=page class=`${currentPage === page ? 'active' : ''}`)= page
+                    .container(id='product-container')
+                        h4 Натисність на сторінку для показу продуктів
+
+

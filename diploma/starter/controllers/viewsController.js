@@ -1,9 +1,13 @@
+const axios = require('axios');
+
 //const Tours = require('../models/tourModel');
 const Products = require('../models/productModel');
 const Bookings = require('../models/bookingModel');
 const Reviews = require('../models/reviewModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+
+
 
 exports.getOverview = catchAsync( async (req, res, next) => {
     const products = await Products.find();
@@ -96,3 +100,15 @@ exports.getChangeMyReviews = async (req, res) => {
         review
     })
 };
+
+exports.getManageProduct = catchAsync( async (req, res, next) => {
+    const response = await axios.get(`http://${process.env.IP}:${process.env.PORT}/api/v1/products/product-stats`);
+    const stats = response.data.data;
+    console.log(stats)
+    const products = await Products.find();
+    res.status(200).render('manageProduct', {
+        title: 'Manage Products',
+        products,
+        stats
+    })
+});
