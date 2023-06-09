@@ -7,6 +7,14 @@ mixin navItemAccount(link, text, icon, active)
                 use(xlink:href=`img/icons.svg#icon-${icon}`)
             | #{text}
 
+mixin tr(name, param1, param2, param3)
+    tr
+        th= name
+        th= param1
+        th= param2
+        th= param3
+
+
 block content
     main.main
         .user-view
@@ -23,21 +31,29 @@ block content
                         +navItemAccount('#', 'Керування продуктами', 'map', true)
                         +navItemAccount('#', 'Керування користувачами', 'users', false)
                         +navItemAccount('#', 'Керування відгуками', 'star', false)
-                        +navItemAccount('#', 'Замовлення', 'briefcase', false)
+                        +navItemAccount('/manage-orders', 'Замовлення', 'briefcase', false)
 
 
             .user-view__content
                 .user-view__form-container.updateCurrentUser
                     h2.heading-secondary.ma-bt-md Керування продуктами
                     form.form.form-user-data
-                        .form__group
-                            label.form__label(for='name')= `Всього продуктів: ${products.length}`
-
-                        .form__group.ma-bt-md
-                            label.form__label(for='email') Статистика:
-                            each stat in stats
-                                h2= stat._id
-
+                        h2 Статистика продуктів за калорійністю
+                        .table-wrapper
+                            table.fl-table
+                                thead
+                                    tr
+                                        th Калорійність
+                                        th= stats[0]._id
+                                        th= stats[1]._id
+                                        th= stats[2]._id
+                                tbody
+                                    +tr('Кількість продуктів', stats[0].numProducts, stats[1].numProducts, stats[2].numProducts)
+                                    +tr('Кількість оцінок', stats[0].numRatings, stats[1].numRatings, stats[2].numRatings)
+                                    +tr('Середній рейтинг', stats[0].avgRating.toFixed(2), stats[1].avgRating.toFixed(2), stats[2].avgRating.toFixed(2))
+                                    +tr('Середня ціна', stats[0].avgPrice.toFixed(2), stats[1].avgPrice.toFixed(2), stats[2].avgPrice.toFixed(2))
+                                    +tr('Мінімальна ціна', stats[0].minPrice, stats[1].minPrice, stats[2].minPrice)
+                                    +tr('Максимальна ціна', stats[0].maxPrice, stats[1].maxPrice, stats[2].maxPrice)
                         .form__group.right
                             button.btn.btn--small.btn--green.btn--save--userdata Створити Продукт
                 .line &nbsp;
@@ -46,10 +62,11 @@ block content
                     nav.pagination
                         ul
                             - let currentPage = 1; // Поточна сторінка
-                            - let totalPages = products.length / 3; // Загальна кількість сторінок
+                            - let totalPages = Math.ceil(products.length / 3); // Загальна кількість сторінок
                             each page in Array.from({ length: totalPages }, (_, i) => i + 1)
                                 li
                                     button.btn.page-button(href="#" data-page=page class=`${currentPage === page ? 'active' : ''}`)= page
+
                     .container(id='product-container')
                         h4 Натисність на сторінку для показу продуктів
 

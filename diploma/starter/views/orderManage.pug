@@ -1,0 +1,60 @@
+extends base
+
+mixin navItemAccount(link, text, icon, active)
+    li(class=`${active ? 'side-nav--active' : ''}`)
+        a(href=`${link}`)
+            svg
+                use(xlink:href=`img/icons.svg#icon-${icon}`)
+            | #{text}
+
+mixin tr(name, param1, param2, param3)
+    tr
+        th= name
+        th= param1
+        th= param2
+        th= param3
+
+
+block content
+    h2.heading-secondary-orders-admin.ma-bt-md Керування продуктами
+        form.form.form-user-data
+            h2 Історія змовлень
+
+            .form__group.right
+                button.btn.btn--small.btn--green.btn--save--userdata Створити Замовлення
+    .line &nbsp;
+    .user-view__form-container-orders-admin
+        h2.heading-secondary-orders-admin.ma-bt-md Історія замовлень
+            .table-wrapper
+                table.fl-table
+                    thead
+                        tr
+                            th Замовлення
+                            th Продукт
+                            th Ім'я
+                            th Email
+                            th Ціна
+                            th Оплачено
+                            th Дата
+                    tbody
+                        tr
+                            th= orders[2]._id
+                            th= orders[2].product.name
+                            th= orders[2].user.name
+                            th= orders[2].user.email
+                            th= orders[2].price
+                            th= orders[3].paid
+                            th= orders[3].createdAt.toLocaleString ('uk-ua', {day: 'numeric',month: 'long',year: 'numeric',hour: 'numeric',minute: 'numeric'})
+                        tr
+                            th= orders[3]._id
+                            th= orders[3].product.name
+                            th= orders[3].user.name
+                            th= orders[3].user.email
+                            th= orders[3].price
+                            th= orders[3].paid
+                            th= orders[3].createdAt.toLocaleString ('uk-ua', {day: 'numeric',month: 'long',year: 'numeric',hour: 'numeric',minute: 'numeric'})
+
+
+
+
+

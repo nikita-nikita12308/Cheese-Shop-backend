@@ -39,5 +39,6 @@ router.get('/billing', authController.protect, viewsController.getMyBilling);
 router.get('/me/reviews/:userId/change/:reviewId', authController.protect, viewsController.getChangeMyReviews);
 
 router.get('/manage-products', authController.protect, viewsController.getManageProduct);
+router.get('/manage-orders', authController.protect, viewsController.getManageOrders);
 
 module.exports = router;

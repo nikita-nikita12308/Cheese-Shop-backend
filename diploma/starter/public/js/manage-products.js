@@ -68,3 +68,23 @@ window.addEventListener('DOMContentLoaded', () => {
   });
   getProducts(1);
 });
+
+const pageButtons = document.querySelectorAll('.page-button');
+
+pageButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const currentPage = parseInt(button.dataset.page);
+    setActiveButton(currentPage);
+  });
+});
+
+function setActiveButton(currentPage) {
+  pageButtons.forEach(button => {
+    const page = parseInt(button.dataset.page);
+    if (page === currentPage) {
+      button.classList.add('active');
+    } else {
+      button.classList.remove('active');
+    }
+  });
+}

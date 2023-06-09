@@ -104,11 +104,26 @@ exports.getChangeMyReviews = async (req, res) => {
 exports.getManageProduct = catchAsync( async (req, res, next) => {
     const response = await axios.get(`http://${process.env.IP}:${process.env.PORT}/api/v1/products/product-stats`);
     const stats = response.data.data;
-    console.log(stats)
     const products = await Products.find();
     res.status(200).render('manageProduct', {
         title: 'Manage Products',
         products,
         stats
+    })
+});
+
+exports.getManageOrders = catchAsync( async (req, res, next) => {
+    const response = await axios.get(`http://${process.env.IP}:${process.env.PORT}/api/v1/products/product-stats`);
+    const stats = response.data.data;
+    const orders = await Bookings.find().populate({
+        path: 'product',
+        select: 'name'
+    }).populate({
+        path: 'user',
+        select: 'name email'
+    });
+    res.status(200).render('orderManage', {
+        title: 'Manage Orders',
+        orders
     })
 });
