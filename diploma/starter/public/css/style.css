@@ -1530,7 +1530,7 @@ nav.pagination button.btn.active {
 
 .fl-table thead th {
   color: #ffffff;
-  background: #4FC3A1;
+  background: #324960;
 }
 
 .fl-table thead th:nth-child(odd) {
@@ -1542,7 +1542,15 @@ nav.pagination button.btn.active {
   background: #F8F8F8;
 }
 
+td.content-field {
+  width: 100px; /* Замініть значення на бажану ширину стовпця */
+}
+td.content-field input[type="text"] {
+  width: 100%;
+}
 .heading-secondary-orders-admin {
+  text-align: center;
+  align-items: center;
   font-size: 2.25rem;
   font-weight: 700;
   background-image: -webkit-gradient(
@@ -1558,8 +1566,36 @@ nav.pagination button.btn.active {
   letter-spacing: 0.1rem;
   line-height: 1.3;
 }
+
 .user-view__form-container-orders-admin {
   min-height: 80rem;
-  margin: 0 auto;
-  padding: 0 8rem;
+  margin: 30px auto;
+  padding: 30px 8rem;
+}
+
+.main-h2-orders-admin {
+  text-transform: uppercase;
+}
+
+.back-button {
+  height: 30px;
+  cursor: pointer;
+}
+.back-button img {
+  transition: transform 0.3s;
+}
+.back-button:hover img {
+  transform: scale(1.2);
+}
+
+.edit-button {
+  height: 30px;
+  cursor: pointer;
+  float: left;
+}
+.edit-button img {
+  transition: transform 0.3s;
+}
+.edit-button:hover img {
+  transform: scale(1.1);
 }

@@ -16,43 +16,42 @@ mixin tr(name, param1, param2, param3)
 
 
 block content
-    h2.heading-secondary-orders-admin.ma-bt-md Керування продуктами
-        form.form.form-user-data
-            h2 Історія змовлень
 
-            .form__group.right
-                button.btn.btn--small.btn--green.btn--save--userdata Створити Замовлення
-    .line &nbsp;
     .user-view__form-container-orders-admin
-        h2.heading-secondary-orders-admin.ma-bt-md Історія замовлень
-            .table-wrapper
-                table.fl-table
-                    thead
-                        tr
-                            th Замовлення
-                            th Продукт
-                            th Ім'я
-                            th Email
-                            th Ціна
-                            th Оплачено
-                            th Дата
-                    tbody
-                        tr
-                            th= orders[2]._id
-                            th= orders[2].product.name
-                            th= orders[2].user.name
-                            th= orders[2].user.email
-                            th= orders[2].price
-                            th= orders[3].paid
-                            th= orders[3].createdAt.toLocaleString ('uk-ua', {day: 'numeric',month: 'long',year: 'numeric',hour: 'numeric',minute: 'numeric'})
-                        tr
-                            th= orders[3]._id
-                            th= orders[3].product.name
-                            th= orders[3].user.name
-                            th= orders[3].user.email
-                            th= orders[3].price
-                            th= orders[3].paid
-                            th= orders[3].createdAt.toLocaleString ('uk-ua', {day: 'numeric',month: 'long',year: 'numeric',hour: 'numeric',minute: 'numeric'})
+        a.back-button(href="/me")
+            img(src="/img/arrow-back.png" alt="Повернутися назад" style="height: 30px; filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));")
+        if orders
+            h2.heading-secondary-orders-admin.ma-bt-md(style="text-transform: uppercase") Історія замовлень
+                .table-wrapper
+                    table.fl-table
+                        thead
+                            tr
+                                th Змінити
+                                th Продукт
+                                th Ім'я
+                                th Email
+                                th Ціна
+                                th Оплачено
+                                th Дата
+                        tbody
+                            for order in orders
+                                tr
+                                    td
+                                        a.edit-button(href='#', onclick=`toggleEditing('${order._id}')`)
+                                            img(src="/img/icon-aprove.png" alt="Повернутися назад" style="height: 30px;")
+                                        a.edit-button(href='#', onclick=`toggleEditing('${order._id}')`)
+                                            img(src="/img/edit-button.png" alt="Повернутися назад" style="height: 30px;")
+                                        a.edit-button(href=`${order._id}->delete`)
+                                            img(src="/img/icon-delete.png" alt="Повернутися назад" style="height: 30px;")
+                                    td.content-field(id=`productName_${order._id}`)= order.product.name
+                                    td.content-field(id=`userName_${order._id}`)= order.user.name
+                                    td.content-field(id=`userEmail_${order._id}`)= order.user.email
+                                    td.content-field(id=`price_${order._id}`)= order.price
+                                    td.content-field(id=`paid_${order._id}`)= order.paid
+                                    td.content-field(id=`createdAt_${order._id}`)= order.createdAt.toLocaleString ('uk-ua', {day: 'numeric',month: 'long',year: 'numeric',hour: 'numeric',minute: 'numeric'})
+        else
+            h2.heading-secondary-orders-admin.ma-bt-md(style="text-transform: uppercase") Замовлень немає ☹
+
 
 
 
