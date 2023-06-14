@@ -11,6 +11,7 @@ router.route('/')
     .post(
         authController.restrictTo('user'),
         reviewController.setProductUserIds,
+        authController.belongTo,
         reviewController.createReview
     );
 

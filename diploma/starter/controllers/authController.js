@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
 const User = require('./../models/userModel');
+const Booking = require('./../models/bookingModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const Email = require('./../utils/email');
@@ -164,7 +165,7 @@ exports.forgotPassword = catchAsync( async(req, res, next) => {
 			message: 'Token sent to email!'
 		})
 	}catch(err){
-    	user.passwordResetToken = undefined;
+			user.passwordResetToken = undefined;
 		user.passwordResetExpires = undefined;
 		await user.save({ validateBeforeSave: false });
 
@@ -212,4 +213,17 @@ exports.updatePassword = catchAsync( async (req, res, next) => {
 	// 4) Log user in, send JWT
 	createSendToken(user, 200, res);
 
+});
+
+exports.belongTo = catchAsync( async (req, res, next) => {
+	//userId , productId
+	const query = {
+		user: req.body.user,
+		product: req.body.product
+	};
+	const userBookings = await Booking.findOne(query);
+	if(!userBookings) {
+		next(new AppError('Only user-owned products can have reviews', 400))
+	}
+	next();
 });
