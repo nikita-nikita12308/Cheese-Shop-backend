@@ -66,6 +66,17 @@ const updateOrder = async (orderId) => {
   }
 };
 
-const deleteOrder = (orderId) => {
-
+const deleteOrder = async (orderId) => {
+  try{
+    const res = await axios({
+      method: 'DELETE',
+      url: `http://127.0.0.1:8000/api/v1/booking/${orderId}`
+    });
+    showAlert('success', 'Deleted successfully');
+    window.setTimeout(() => {
+      location.reload(true)
+    }, 1500);
+  }catch(e) {
+    showAlert('error', e.message)
+  }
 };

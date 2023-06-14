@@ -36,14 +36,14 @@ block content
                                 th Ім'я
                                 th Дата
                         tbody(style="font-weight: 800")
-                            for order in orders
+                            each order in orders.reverse()
                                 tr
                                     td
                                         a.edit-button(href='#', onclick=`updateOrder('${order._id}')`)
                                             img(src="/img/icon-aprove.png" alt="Повернутися назад" style="height: 30px;")
                                         a.edit-button(href='#', onclick=`toggleEditing('${order._id}')`)
                                             img(src="/img/edit-button.png" alt="Повернутися назад" style="height: 30px;")
-                                        a.edit-button(href=`${order._id}->delete`)
+                                        a.edit-button(href=`#` onclick=`deleteOrder('${order._id}')`)
                                             img(src="/img/icon-delete.png" alt="Повернутися назад" style="height: 30px;")
                                     td.content-field(id=`price_${order._id}`)= order.price
                                     td.content-field(id=`paid_${order._id}`)= order.paid
