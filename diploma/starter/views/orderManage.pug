@@ -21,33 +21,37 @@ block content
         a.back-button(href="/me")
             img(src="/img/arrow-back.png" alt="Повернутися назад" style="height: 30px; filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));")
         if orders
-            h2.heading-secondary-orders-admin.ma-bt-md(style="text-transform: uppercase") Історія замовлень
+            h2.heading-secondary-orders-admin.ma-bt-md ІСТОРІЯ ЗАМОВЛЕНЬ
                 .table-wrapper
-                    table.fl-table
+                    table.fl-table(style="text-size: 18px")
                         thead
                             tr
                                 th Змінити
-                                th Продукт
-                                th Ім'я
-                                th Email
                                 th Ціна
                                 th Оплачено
+                                th Id користувача
+                                th Email
+                                th Id продукту
+                                th Продукт
+                                th Ім'я
                                 th Дата
-                        tbody
+                        tbody(style="font-weight: 800")
                             for order in orders
                                 tr
                                     td
-                                        a.edit-button(href='#', onclick=`toggleEditing('${order._id}')`)
+                                        a.edit-button(href='#', onclick=`updateOrder('${order._id}')`)
                                             img(src="/img/icon-aprove.png" alt="Повернутися назад" style="height: 30px;")
                                         a.edit-button(href='#', onclick=`toggleEditing('${order._id}')`)
                                             img(src="/img/edit-button.png" alt="Повернутися назад" style="height: 30px;")
                                         a.edit-button(href=`${order._id}->delete`)
                                             img(src="/img/icon-delete.png" alt="Повернутися назад" style="height: 30px;")
-                                    td.content-field(id=`productName_${order._id}`)= order.product.name
-                                    td.content-field(id=`userName_${order._id}`)= order.user.name
-                                    td.content-field(id=`userEmail_${order._id}`)= order.user.email
                                     td.content-field(id=`price_${order._id}`)= order.price
                                     td.content-field(id=`paid_${order._id}`)= order.paid
+                                    td.content-field(id=`userId_${order._id}`)= order.user.id
+                                    td.content-field(id=`userEmail_${order._id}`)= order.user.email
+                                    td.content-field(id=`productId_${order._id}`)= order.product.id
+                                    td.content-field(id=`productName_${order._id}`)= order.product.name
+                                    td.content-field(id=`userName_${order._id}`)= order.user.name
                                     td.content-field(id=`createdAt_${order._id}`)= order.createdAt.toLocaleString ('uk-ua', {day: 'numeric',month: 'long',year: 'numeric',hour: 'numeric',minute: 'numeric'})
         else
             h2.heading-secondary-orders-admin.ma-bt-md(style="text-transform: uppercase") Замовлень немає ☹
