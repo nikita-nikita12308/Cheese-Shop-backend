@@ -13,7 +13,7 @@ block content
             nav.user-view__menu
                 ul.side-nav
                     +navItemAccount('/me', 'Налаштування', 'settings', false)
-                    +navItemAccount('/my-orders', 'My Замовлення', 'briefcase', false)
+                    +navItemAccount('/my-orders', 'Мої Замовлення', 'briefcase', false)
                     +navItemAccount(`/me/reviews/${user.id}`, 'Мої відгуки', 'star', false)
                     +navItemAccount('#', 'Історія Платежів', 'credit-card', true)
                 - if(user.role === 'admin')
@@ -28,7 +28,7 @@ block content
 
             .user-view__content
                 .user-view__form-container.updateCurrentUser
-                    if orders.order
+                    if orders
                         h2.heading-secondary.ma-bt-md Платежі
                         each order in orders
                             .card(style='padding-bottom: 15px')

@@ -13,7 +13,7 @@ block content
             nav.user-view__menu
                 ul.side-nav
                     +navItemAccount('#', 'Налаштування', 'settings', true)
-                    +navItemAccount('/my-orders', 'My Замовлення', 'briefcase', false)
+                    +navItemAccount('/my-orders', 'Мої Замовлення', 'briefcase', false)
                     +navItemAccount(`/me/reviews/${user.id}`, 'Мої відгуки', 'star', false)
                     +navItemAccount('/billing', 'Історія Платежів', 'credit-card', false)
                 - if(user.role === 'admin')

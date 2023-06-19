@@ -14,7 +14,7 @@ block content
             nav.user-view__menu
                 ul.side-nav
                     +navItemAccount('/me', 'Налаштування', 'settings', false)
-                    +navItemAccount('/my-orders', 'My Замовлення', 'briefcase', false)
+                    +navItemAccount('/my-orders', 'Мої замовлення', 'briefcase', false)
                     +navItemAccount(`/me/reviews/${user.id}`, 'Мої відгуки', 'star', true)
                     +navItemAccount('/billing', 'Історія Платежів', 'credit-card', false)
                 - if(user.role === 'admin')
@@ -29,7 +29,7 @@ block content
 
             .user-view__content
                 .user-view__form-container.updateCurrentUser
-                    if reviews.user
+                    if reviews
                         - console.log("Reviews:" + reviews)
                         .user-view__content.my__reviews_container
                             .user-view__form-container
