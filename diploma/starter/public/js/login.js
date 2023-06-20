@@ -185,6 +185,18 @@ if(bookBtn){
     })
 }
 
+const slider = document.getElementById('priceRange');
+const minPrice = document.querySelector('.min-price');
+const maxPrice = document.querySelector('.max-price');
 
+slider.addEventListener('input', () => {
+    const minValue = parseInt(slider.min);
+    const maxValue = parseInt(slider.max);
+    const value = parseInt(slider.value);
 
+    const range = maxValue - minValue;
+    const price = minValue + (value * (range / 100));
+
+    minPrice.textContent = `$${price}`;
+});
 

@@ -2,6 +2,20 @@ extends base
 
 block content
     main.main
+        .filter-container
+            //- Діапазон цін
+            div.range-slider
+                label(for="priceRange") Ціновий діапазон
+                input(type="range", min="0", max="100", value="0", class="slider", id="priceRange")
+                span(min-price) $0
+                span(max-price) $100
+
+            //- Сортування за ціною
+            select.select-input(name="sortByPrice")
+                option(value="low") Нижча ціна
+                option(value="high") Вища ціна
+
+            a.btn.btn--green.btn--small(href=`#` style="margin-left: 20px;") Знайти
         .card-container
             each product in products
                 .card
