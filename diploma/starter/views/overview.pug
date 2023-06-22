@@ -3,19 +3,23 @@ extends base
 block content
     main.main
         .filter-container
-            //- Діапазон цін
-            div.range-slider
-                label(for="priceRange") Ціновий діапазон
-                input(type="range", min="0", max="100", value="0", class="slider", id="priceRange")
-                span(min-price) $0
-                span(max-price) $100
+            .range-slider
+                label(for="minPrice") Мінімальна Ціна
+                input(type="range", min="0", max="1000", value="0", class="slider", id="minPrice")
+                span#minPriceDisplay.price-display ₴0
+            .range-slider
+                label(for="maxPrice") Максимальна Ціна
+                input(type="range", min="0", max="1000", value="1000", class="slider", id="maxPrice")
+                span#maxPriceDisplay.price-display ₴1000
 
-            //- Сортування за ціною
-            select.select-input(name="sortByPrice")
-                option(value="low") Нижча ціна
-                option(value="high") Вища ціна
+            .sort-filter
+                label(for="sortByPrice") Сортувати за:
+                select.select-input(name="sortByPrice")
+                    option(value="low") Найдешевшими
+                    option(value="high") Найдорожчими
 
-            a.btn.btn--green.btn--small(href=`#` style="margin-left: 20px;") Знайти
+
+                a.btn.btn--green.btn--small(href=`#` id="searchButton" style="margin-left: 20px;") Знайти
         .card-container
             each product in products
                 .card

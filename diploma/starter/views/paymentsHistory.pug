@@ -30,7 +30,7 @@ block content
                 .user-view__form-container.updateCurrentUser
                     if orders
                         h2.heading-secondary.ma-bt-md Платежі
-                        each order in orders
+                        each order in orders.slice(-3).reverse()
                             .card(style='padding-bottom: 15px')
                                 .card__details
                                     h4.card__sub-heading= `Transaction id: ${order.id}`

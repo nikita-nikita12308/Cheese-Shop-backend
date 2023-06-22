@@ -184,19 +184,48 @@ if(bookBtn){
         bookTour(productId)
     })
 }
+document.addEventListener("DOMContentLoaded", function() {
+    const minPriceSlider = document.getElementById("minPrice");
+    const maxPriceSlider = document.getElementById("maxPrice");
+    const minPriceDisplay = document.getElementById("minPriceDisplay");
+    const maxPriceDisplay = document.getElementById("maxPriceDisplay");
+    const searchButton = document.getElementById("searchButton");
 
-const slider = document.getElementById('priceRange');
-const minPrice = document.querySelector('.min-price');
-const maxPrice = document.querySelector('.max-price');
+    minPriceSlider.addEventListener("input", updateMinPrice);
+    maxPriceSlider.addEventListener("input", updateMaxPrice);
+    searchButton.addEventListener("click", performSearch);
 
-slider.addEventListener('input', () => {
-    const minValue = parseInt(slider.min);
-    const maxValue = parseInt(slider.max);
-    const value = parseInt(slider.value);
+    function updateMinPrice() {
+        const selectedMinPrice = parseInt(minPriceSlider.value);
+        minPriceDisplay.textContent = "$" + selectedMinPrice;
+    }
 
-    const range = maxValue - minValue;
-    const price = minValue + (value * (range / 100));
+    function updateMaxPrice() {
+        const selectedMaxPrice = parseInt(maxPriceSlider.value);
+        maxPriceDisplay.textContent = "$" + selectedMaxPrice;
+    }
 
-    minPrice.textContent = `$${price}`;
+    function performSearch() {
+        const selectedMinPrice = parseInt(minPriceSlider.value);
+        const selectedMaxPrice = parseInt(maxPriceSlider.value);
+
+        // Check if the minimum price is larger than the maximum price
+        if (selectedMinPrice > selectedMaxPrice) {
+            showAlert('error', "Мінімальна ціна не може перевищувати максимальну ціну.");
+            return; // Stop further execution
+        }
+
+        // Call a function here to perform the search based on the selected price range
+        searchProducts(selectedMinPrice, selectedMaxPrice);
+    }
+
+    function searchProducts(minPrice, maxPrice) {
+        // Implement your search logic here based on the selected price range
+        console.log("Searching products with minimum price:", minPrice);
+        console.log("Searching products with maximum price:", maxPrice);
+    }
 });
+
+
+
 
